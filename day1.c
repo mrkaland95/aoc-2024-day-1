@@ -168,7 +168,7 @@ int main() {
     free(data);
 
     part1(leftNums, rightNums, n);
-    // part2(leftNums, rightNums, n);
+    part2(leftNums, rightNums, n);
     
     return 0;
 }
