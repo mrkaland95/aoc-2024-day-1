@@ -93,6 +93,7 @@ void part1(int* left, int* right, int n) {
         cummulativeDistance += distance;
     }
 
+    // Answer: 1646452
     printf("Total Distance: %d\n", cummulativeDistance);
 }
 
@@ -119,7 +120,7 @@ void part2(int* left, int* right, int n) {
         cummulativeSimilarityScore += (leftValue * similarityCount); 
         printf("Left Value: %d, similarity count: %d\n", leftValue, similarityCount);
     }
-
+    // Answer: 23609874
     printf("Total Similarity Count: %d", cummulativeSimilarityScore);
 
 }
@@ -132,6 +133,7 @@ int main() {
     int cummulativeDistance = 0;
     int n = 1000;
     
+    // Load input from disk
     fileptr = fopen(inputFile, "r");
     fseek(fileptr, 0, SEEK_END);
     int size = ftell(fileptr);
@@ -166,7 +168,7 @@ int main() {
     free(data);
 
     part1(leftNums, rightNums, n);
-    part2(leftNums, rightNums, n);
+    // part2(leftNums, rightNums, n);
     
     return 0;
 }
