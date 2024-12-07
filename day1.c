@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <assert.h>
 
 /*
 --- Day 1: Historian Hysteria ---
@@ -66,6 +67,64 @@ int compare(const void *a, const void *b) {
     return (*(int *)a - *(int *)b);
 }
 
+void copyArray(int *src, int *dest, int size) {
+    for (int i = 0; i < size; i++) {
+        dest[i] = src[i];
+    }
+}
+
+
+void part1(int* left, int* right, int n) {
+    int cummulativeDistance = 0;
+
+    // Ensure we don't mutate the original arrays
+    int *nLeft = (int *)malloc(n * sizeof(int));
+    int *nRight = (int *)malloc(n * sizeof(int));
+    copyArray(left, nLeft, n);
+    copyArray(right, nRight, n);
+
+    // Sort arrays 
+    qsort(nLeft, n, sizeof(int), compare);
+    qsort(nRight, n, sizeof(int), compare);
+
+    for (int i = 0; i < n; i++) {
+        int distance = abs(nLeft[i] - nRight[i]);
+        printf("i: %d, left value: %d, right value: %d, distance: %d\n", i, nLeft[i], nRight[i], distance);
+        cummulativeDistance += distance;
+    }
+
+    printf("Total Distance: %d\n", cummulativeDistance);
+}
+
+
+void part2(int* left, int* right, int n) {
+    int cummulativeSimilarityScore = 0;
+
+    // Ensure we don't mutate the original array
+    int *nLeft = (int *)malloc(n * sizeof(int));
+    int *nRight = (int *)malloc(n * sizeof(int));
+
+    copyArray(left, nLeft, n);
+    copyArray(right, nRight, n);
+
+    for (int x = 0; x < n; x++) {
+        int similarityCount = 0;
+        int leftValue = nLeft[x];
+        for (int y = 0; y < n; y++) {
+            int rightValue = nRight[y];
+            if (rightValue == leftValue) {
+                similarityCount++;
+            }
+        }
+        cummulativeSimilarityScore += (leftValue * similarityCount); 
+        printf("Left Value: %d, similarity count: %d\n", leftValue, similarityCount);
+    }
+
+    printf("Total Similarity Count: %d", cummulativeSimilarityScore);
+
+}
+
+
 
 int main() {
     // Assumption: Right and left lists are of equal length.
@@ -106,18 +165,8 @@ int main() {
     fclose(fileptr);
     free(data);
 
-    // Sort arrays 
-    qsort(leftNums, n, sizeof(int), compare);
-    qsort(rightNums, n, sizeof(int), compare);
-
-    for (int i = 0; i < n; i++) {
-        cummulativeDistance += leftNums[i] - rightNums[i];
-        printf("i: %d, left value: %d, right value: %d\n", i, leftNums[i], rightNums[i]);
-    }
-
-    printf("Total Distance: %d\n", cummulativeDistance);
-
-
+    part1(leftNums, rightNums, n);
+    part2(leftNums, rightNums, n);
     
     return 0;
 }

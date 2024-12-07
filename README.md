@@ -4,7 +4,11 @@ https://adventofcode.com/2024/day/1
 
 ### Learning C
 
+This is intended as a fun little project to get into learning C.
+
 ### Resources
+
+
 
 
 ### Notes
